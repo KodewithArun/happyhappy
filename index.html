@@ -151,15 +151,15 @@
                         transition={{ duration: 1.5 }}
                         className="mb-8 relative z-10"
                     >
-                        <h1 className="font-cursive text-6xl md:text-8xl text-rose-500 mb-4 text-shadow-glow">Arun & Binisha</h1>
-                        <p className="font-serif text-xl text-gray-400 tracking-widest uppercase">The Love Story</p>
+                        <h1 className="font-cursive text-5xl md:text-8xl text-rose-500 mb-4 text-shadow-glow">Arun & Binisha</h1>
+                        <p className="font-serif text-lg md:text-xl text-gray-400 tracking-widest uppercase">The Love Story</p>
                     </motion.div>
 
                     <motion.button
                         onClick={onEnter}
                         whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(225, 29, 72, 0.5)" }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-transparent border border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white font-serif text-2xl px-12 py-4 rounded-full transition-all duration-500 relative z-10"
+                        className="bg-transparent border border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white font-serif text-xl md:text-2xl px-8 md:px-12 py-3 md:py-4 rounded-full transition-all duration-500 relative z-10"
                     >
                         Start The Magic ❤️
                     </motion.button>
@@ -207,8 +207,8 @@
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.5, duration: 1 }}
                         >
-                            <span className="text-rose-400 mr-4 text-2xl">🔍</span>
-                            <div className="flex-1 font-sans text-xl md:text-2xl text-white/90 font-light tracking-wide typing-effect">
+                            <span className="text-rose-400 mr-4 text-xl md:text-2xl">🔍</span>
+                            <div className="flex-1 font-sans text-lg md:text-2xl text-white/90 font-light tracking-wide typing-effect">
                                 Who is the love of my life?
                             </div>
                         </motion.div>
@@ -224,19 +224,19 @@
                                 About 1 result (0.00 seconds) — Found deep in my heart
                             </div>
 
-                            <h1 className="font-serif text-7xl md:text-9xl text-white mb-6 drop-shadow-[0_0_25px_rgba(225,29,72,0.8)]">
+                            <h1 className="font-serif text-5xl md:text-9xl text-white mb-6 drop-shadow-[0_0_25px_rgba(225,29,72,0.8)]">
                                 Binisha <span className="text-rose-500">.</span>
                             </h1>
 
                             <div className="glass-card p-8 rounded-xl max-w-3xl mx-auto border-t-4 border-rose-500">
-                                <p className="font-serif text-2xl md:text-3xl text-gray-200 leading-relaxed italic">
+                                <p className="font-serif text-xl md:text-3xl text-gray-200 leading-relaxed italic">
                                     "The one who turned a simple wave in 2019 into a customized forever. My best friend, my soulmate, and my reason to believe in magic."
                                 </p>
-                                <div className="mt-6 flex justify-center gap-4 text-sm text-gray-400 font-sans uppercase tracking-widest">
+                                <div className="mt-6 flex flex-wrap justify-center gap-3 md:gap-4 text-[10px] md:text-sm text-gray-400 font-sans uppercase tracking-widest">
                                     <span>Since 2019</span>
-                                    <span>•</span>
+                                    <span className="hidden md:inline">•</span>
                                     <span>Infinite Love</span>
-                                    <span>•</span>
+                                    <span className="hidden md:inline">•</span>
                                     <span>My Everything</span>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                                 whileHover={{ scale: 1.02, rotateY: isEven ? 5 : -5 }}
                                 transition={{ duration: 0.5 }}
                             >
-                                <img src={data.img} alt={data.title} className="w-full h-[400px] md:h-[600px] object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <img src={data.img} alt={data.title} className="w-full h-[300px] md:h-[600px] object-cover transition-transform duration-700 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
                                 <div className="absolute bottom-6 left-6 text-white p-4">
                                     <span className="font-serif italic text-rose-300 text-lg block mb-2">{data.year}</span>
@@ -297,8 +297,8 @@
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 1, delay: 0.3 }}
                     >
-                        <h2 className="font-cursive text-5xl md:text-6xl text-rose-500 mb-8 text-shadow-glow">{data.title}</h2>
-                        <p className="font-serif text-xl md:text-2xl text-gray-300 leading-relaxed mb-8 font-light">
+                        <h2 className="font-cursive text-4xl md:text-6xl text-rose-500 mb-6 md:mb-8 text-shadow-glow">{data.title}</h2>
+                        <p className="font-serif text-lg md:text-2xl text-gray-300 leading-relaxed mb-6 md:mb-8 font-light">
                             {data.desc}
                         </p>
                         <div className={`border-l-4 border-rose-500 pl-6 py-2 ${!isEven ? 'md:border-l-0 md:border-r-4 md:pl-0 md:pr-6 md:text-right' : ''}`}>
@@ -342,11 +342,11 @@
                                     initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                                     className="max-w-3xl mx-auto glass-card p-12 rounded-xl"
                                 >
-                                    <p className="font-cursive text-4xl text-rose-400 mb-8">My Beloved Binisha,</p>
-                                    <p className="font-serif text-xl text-gray-200 leading-relaxed mb-8">
+                                    <p className="font-cursive text-3xl md:text-4xl text-rose-400 mb-6 md:mb-8">My Beloved Binisha,</p>
+                                    <p className="font-serif text-lg md:text-xl text-gray-200 leading-relaxed mb-6 md:mb-8">
                                         Love is not about finding someone to live with; it's about finding someone you can't imagine living without. Since 2019, you have been my every dawn and every dusk.
                                     </p>
-                                    <h2 className="font-serif text-5xl md:text-6xl text-white mb-12 italic text-shadow-glow">Will You Be My Valentine Forever?</h2>
+                                    <h2 className="font-serif text-3xl md:text-6xl text-white mb-8 md:mb-12 italic text-shadow-glow">Will You Be My Valentine Forever?</h2>
 
                                     <div className="flex flex-col md:flex-row justify-center gap-8 items-center h-32 relative">
                                         <motion.button
@@ -369,10 +369,10 @@
                             )}
 
                             {celebrated && (
-                                <motion.div key="celebration" initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-center p-8">
-                                    <h1 className="font-cursive text-8xl md:text-9xl text-rose-600 mb-8 text-shadow-glow">I LOVE YOU!</h1>
-                                    <p className="font-serif text-3xl text-white italic">Forever & Always, Binisha ❤️</p>
-                                    <div className="text-rose-400 text-xl mt-8 font-sans tracking-widest uppercase">Happy Valentine's Day 2026</div>
+                                <motion.div key="celebration" initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-center p-4 md:p-8">
+                                    <h1 className="font-cursive text-5xl md:text-9xl text-rose-600 mb-6 md:mb-8 text-shadow-glow">I LOVE YOU!</h1>
+                                    <p className="font-serif text-xl md:text-3xl text-white italic">Forever & Always, Binisha ❤️</p>
+                                    <div className="text-rose-400 text-lg md:text-xl mt-6 md:mt-8 font-sans tracking-widest uppercase">Happy Valentine's Day 2026</div>
 
                                     {/* Confetti */}
                                     {[...Array(50)].map((_, i) => (
