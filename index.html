@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arun & Binisha — The Red Thread of Fate</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                        cursive: ['"Great Vibes"', 'cursive'],
+                    },
+                    colors: {
+                        gold: '#d4af37',
+                        deepRed: '#5e0b15',
+                        rose: '#e11d48',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- React & Framer Motion -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js" crossorigin></script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e11d48;
+            border-radius: 3px;
+        }
+
+        .text-shadow-glow {
+            text-shadow: 0 0 20px rgba(225, 29, 72, 0.6);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } = window.Motion;
+
+        const images = {
+            hero: "./images/hero.png",
+            meeting: "./images/first_meeting.png",
+            school: "./images/school_days.png",
+            college: "./images/college.png",
+            walking: "./images/walking.png",
+            kiss: "./images/forehead_kiss.png",
+            calls: "./images/phone_call.png",
+            proposal: "./images/proposal.png",
+            video: "./images/video_call.png",
+            love: "./images/love.png"
+        };
+
+        // --- Rose Petal Effect ---
+        const RosePetals = () => {
+            return (
+                <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                    {[...Array(20)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute text-rose-500/60"
+                            initial={{
+                                x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+                                y: -100,
+                                opacity: 0,
+                                rotate: 0
+                            }}
+                            animate={{
+                                y: typeof window !== 'undefined' ? window.innerHeight + 100 : 1000,
+                                opacity: [0, 1, 1, 0],
+                                rotate: 360,
+                                x: `calc(${Math.random() * 100}vw - 50vw)` // Drift
+                            }}
+                            transition={{
+                                duration: 10 + Math.random() * 10,
+                                repeat: Infinity,
+                                ease: "linear",
+                                delay: Math.random() * 10
+                            }}
+                            style={{ fontSize: 20 + Math.random() * 20 }}
+                        >
+                            ❤️
+                        </motion.div>
+                    ))}
+                </div>
+            );
+        };
+
+        // --- Enter Screen (Critical for Music) ---
+        const EnterScreen = ({ onEnter }) => {
+            return (
+                <motion.div
+                    className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-center px-4 bg-cover"
+                    style={{ backgroundImage: "url('./images/love.png')", backgroundPosition: "center 20%" }}
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0, transition: { duration: 1 } }}
+                >
+                    <div className="absolute inset-0 bg-black/60"></div>
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 1.5 }}
+                        className="mb-8 relative z-10"
+                    >
+                        <h1 className="font-cursive text-6xl md:text-8xl text-rose-500 mb-4 text-shadow-glow">Arun & Binisha</h1>
+                        <p className="font-serif text-xl text-gray-400 tracking-widest uppercase">The Love Story</p>
+                    </motion.div>
+
+                    <motion.button
+                        onClick={onEnter}
+                        whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(225, 29, 72, 0.5)" }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-transparent border border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white font-serif text-2xl px-12 py-4 rounded-full transition-all duration-500 relative z-10"
+                    >
+                        Start The Magic ❤️
+                    </motion.button>
+                    <p className="mt-4 text-gray-500 text-sm relative z-10">(Click to play music & display our story)</p>
+                </motion.div>
+            );
+        };
+
+        // --- Music Player (Local Audio) ---
+        const MusicPlayer = ({ isPlaying, togglePlay, audioRef }) => {
+            return (
+                <div onClick={togglePlay} className="fixed bottom-6 right-6 z-40 cursor-pointer group">
+                    <motion.div
+                        className="bg-black/50 backdrop-blur-md border border-rose-500/30 p-4 rounded-full shadow-2xl group-hover:bg-rose-900/50 transition-all box-shadow-glow"
+                        animate={isPlaying ? { rotate: 360 } : { rotate: 0 }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    >
+                        <span className="text-2xl">{isPlaying ? '💿' : '🔇'}</span>
+                    </motion.div>
+                    <audio ref={audioRef} src="./music.mp3" loop />
+                </div>
+            );
+        };
+
+        // --- Hero Section ---
+        const Hero = () => {
+            const { scrollY } = useScroll();
+            const y = useTransform(scrollY, [0, 500], [0, 200]);
+
+            return (
+                <div className="relative h-screen flex items-center justify-center overflow-hidden">
+                    <motion.div
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{ backgroundImage: `url(${images.hero})`, y }}
+                    />
+                    {/* Darker gradient for better text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
+
+                    <div className="z-10 w-full max-w-4xl px-4 flex flex-col items-center">
+
+                        {/* Google-style Search Bar */}
+                        <motion.div
+                            className="w-full max-w-2xl bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-4 flex items-center shadow-[0_0_30px_rgba(255,255,255,0.1)] mb-12"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.5, duration: 1 }}
+                        >
+                            <span className="text-rose-400 mr-4 text-2xl">🔍</span>
+                            <div className="flex-1 font-sans text-xl md:text-2xl text-white/90 font-light tracking-wide typing-effect">
+                                Who is the love of my life?
+                            </div>
+                        </motion.div>
+
+                        {/* Search Result / Content */}
+                        <motion.div
+                            className="text-center"
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.5, duration: 1 }}
+                        >
+                            <div className="text-gray-400 text-sm mb-4 font-sans tracking-wide">
+                                About 1 result (0.00 seconds) — Found deep in my heart
+                            </div>
+
+                            <h1 className="font-serif text-7xl md:text-9xl text-white mb-6 drop-shadow-[0_0_25px_rgba(225,29,72,0.8)]">
+                                Binisha <span className="text-rose-500">.</span>
+                            </h1>
+
+                            <div className="glass-card p-8 rounded-xl max-w-3xl mx-auto border-t-4 border-rose-500">
+                                <p className="font-serif text-2xl md:text-3xl text-gray-200 leading-relaxed italic">
+                                    "The one who turned a simple wave in 2019 into a customized forever. My best friend, my soulmate, and my reason to believe in magic."
+                                </p>
+                                <div className="mt-6 flex justify-center gap-4 text-sm text-gray-400 font-sans uppercase tracking-widest">
+                                    <span>Since 2019</span>
+                                    <span>•</span>
+                                    <span>Infinite Love</span>
+                                    <span>•</span>
+                                    <span>My Everything</span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    <motion.div
+                        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 text-4xl"
+                        animate={{ y: [0, 10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                    >
+                        ↓
+                    </motion.div>
+                </div>
+            );
+        };
+
+        // --- Story Section ---
+        const StorySection = ({ data, index }) => {
+            const isEven = index % 2 === 0;
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true, margin: "-20%" });
+
+            return (
+                <div ref={ref} className={`relative py-32 flex flex-col md:flex-row items-center justify-center w-full max-w-7xl mx-auto px-6 ${isEven ? '' : 'md:flex-row-reverse'}`}>
+
+                    {/* Red Thread Connector (Vertical Line) */}
+                    <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-rose-500/30 transform -translate-x-1/2 hidden md:block"></div>
+                    <div className="absolute left-1/2 top-1/2 w-4 h-4 bg-rose-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_rgba(225,29,72,0.8)] z-10 hidden md:block"></div>
+
+                    {/* Image */}
+                    <motion.div
+                        className="w-full md:w-1/2 p-6 z-10"
+                        initial={{ opacity: 0, x: isEven ? -100 : 100, rotate: isEven ? -5 : 5 }}
+                        animate={isInView ? { opacity: 1, x: 0, rotate: isEven ? -2 : 2 } : {}}
+                        transition={{ duration: 1, type: "spring" }}
+                    >
+                        <div className="relative group perspective-1000">
+                            <motion.div
+                                className="relative rounded-lg overflow-hidden border-[1px] border-white/10 shadow-2xl glass-card"
+                                whileHover={{ scale: 1.02, rotateY: isEven ? 5 : -5 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <img src={data.img} alt={data.title} className="w-full h-[400px] md:h-[600px] object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+                                <div className="absolute bottom-6 left-6 text-white p-4">
+                                    <span className="font-serif italic text-rose-300 text-lg block mb-2">{data.year}</span>
+                                    <h3 className="font-serif text-3xl font-bold">{data.title}</h3>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+
+                    {/* Text */}
+                    <motion.div
+                        className="w-full md:w-1/2 p-8 md:p-16 z-10 text-center md:text-left"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, delay: 0.3 }}
+                    >
+                        <h2 className="font-cursive text-5xl md:text-6xl text-rose-500 mb-8 text-shadow-glow">{data.title}</h2>
+                        <p className="font-serif text-xl md:text-2xl text-gray-300 leading-relaxed mb-8 font-light">
+                            {data.desc}
+                        </p>
+                        <div className={`border-l-4 border-rose-500 pl-6 py-2 ${!isEven ? 'md:border-l-0 md:border-r-4 md:pl-0 md:pr-6 md:text-right' : ''}`}>
+                            <p className="font-cursive text-2xl text-rose-200/80">"{data.quote}"</p>
+                        </div>
+                    </motion.div>
+                </div>
+            );
+        };
+
+        // --- Proposal ---
+        const Proposal = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [noPos, setNoPos] = useState({ x: 0, y: 0 });
+            const [celebrated, setCelebrated] = useState(false);
+
+            const moveNo = () => setNoPos({ x: (Math.random() - 0.5) * 300, y: (Math.random() - 0.5) * 200 });
+
+            return (
+                <div className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden bg-black">
+                    <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: `url(${images.proposal})` }}></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
+
+                    <div className="relative z-10 container mx-auto px-4 text-center">
+                        <AnimatePresence>
+                            {!isOpen && (
+                                <motion.div
+                                    key="start"
+                                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                    className="cursor-pointer"
+                                    onClick={() => setIsOpen(true)}
+                                >
+                                    <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 2 }} className="text-8xl mb-8">💌</motion.div>
+                                    <h2 className="font-serif text-5xl text-white border-b-2 border-rose-500 inline-block pb-2">Open My Heart</h2>
+                                </motion.div>
+                            )}
+
+                            {isOpen && !celebrated && (
+                                <motion.div
+                                    key="letter"
+                                    initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                                    className="max-w-3xl mx-auto glass-card p-12 rounded-xl"
+                                >
+                                    <p className="font-cursive text-4xl text-rose-400 mb-8">My Beloved Binisha,</p>
+                                    <p className="font-serif text-xl text-gray-200 leading-relaxed mb-8">
+                                        Love is not about finding someone to live with; it's about finding someone you can't imagine living without. Since 2019, you have been my every dawn and every dusk.
+                                    </p>
+                                    <h2 className="font-serif text-5xl md:text-6xl text-white mb-12 italic text-shadow-glow">Will You Be My Valentine Forever?</h2>
+
+                                    <div className="flex flex-col md:flex-row justify-center gap-8 items-center h-32 relative">
+                                        <motion.button
+                                            whileHover={{ scale: 1.1 }}
+                                            onClick={() => setCelebrated(true)}
+                                            className="bg-rose-600 text-white font-serif text-2xl px-12 py-4 rounded-full shadow-[0_0_20px_rgba(225,29,72,0.6)] z-20 hover:bg-rose-700 transition-colors"
+                                        >
+                                            YES, I WILL! 🌹
+                                        </motion.button>
+                                        <motion.button
+                                            animate={{ x: noPos.x, y: noPos.y }}
+                                            onHoverStart={moveNo}
+                                            onTouchStart={moveNo}
+                                            className="bg-gray-800 text-gray-500 font-serif text-2xl px-12 py-4 rounded-full cursor-not-allowed border border-gray-700"
+                                        >
+                                            No...
+                                        </motion.button>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {celebrated && (
+                                <motion.div key="celebration" initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-center p-8">
+                                    <h1 className="font-cursive text-8xl md:text-9xl text-rose-600 mb-8 text-shadow-glow">I LOVE YOU!</h1>
+                                    <p className="font-serif text-3xl text-white italic">Forever & Always, Binisha ❤️</p>
+                                    <div className="text-rose-400 text-xl mt-8 font-sans tracking-widest uppercase">Happy Valentine's Day 2026</div>
+
+                                    {/* Confetti */}
+                                    {[...Array(50)].map((_, i) => (
+                                        <motion.div
+                                            key={i}
+                                            className="fixed text-5xl z-50 pointer-events-none"
+                                            initial={{ top: "100%", left: Math.random() * 100 + "%" }}
+                                            animate={{ top: "-20%", rotate: Math.random() * 360, x: (Math.random() - 0.5) * 500 }}
+                                            transition={{ duration: 4 + Math.random() * 4, ease: "easeOut" }}
+                                        >
+                                            {["❤️", "🌹", "✨", "🌸"][Math.floor(Math.random() * 4)]}
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [hasEntered, setHasEntered] = useState(false);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = useRef(null);
+
+            const handleEnter = () => {
+                setHasEntered(true);
+                // Try to play audio immediately after user interaction
+                setTimeout(() => {
+                    if (audioRef.current) {
+                        audioRef.current.play()
+                            .then(() => setIsPlaying(true))
+                            .catch(e => console.log("Audio play failed, waiting for interaction", e));
+                    }
+                }, 100);
+            };
+
+            const togglePlay = () => {
+                if (!audioRef.current) return;
+                if (isPlaying) {
+                    audioRef.current.pause();
+                } else {
+                    audioRef.current.play();
+                }
+                setIsPlaying(!isPlaying);
+            };
+
+            const events = [
+                {
+                    year: "2019", img: images.meeting, title: "The First Wave",
+                    desc: "It started with a playful 'Hey Auntie!' in 2019. You were in your black t-shirt and ponytail, and I was in my white 'GMI' paint t-shirt. I waved, and destiny waved back.",
+                    quote: "One wave was all it took."
+                },
+                {
+                    year: "2020", img: images.school, title: "The College Bus",
+                    desc: "Standing in front of the Aroma College bus, our journey truly began. No longer just a wave, but a shared direction in life.",
+                    quote: "We caught the same bus to destiny."
+                },
+                {
+                    year: "2022", img: images.college, title: "Bachelor's Class",
+                    desc: "We joined the Bachelor's program, sitting in the same class. Studying together, dreaming together, and building our future side by side.",
+                    quote: "Classmates in bachelor, soulmates in life."
+                },
+                {
+                    year: "2023", img: images.walking, title: "",
+                    desc: "Just us, walking down the long road. No destination in mind, just the comfort of your presence and the rhythm of our steps.",
+                    quote: "I'd walk a thousand miles with you."
+                },
+                {
+                    year: "2024", img: images.video, title: "The Warm Embrace",
+                    desc: "A hug that stopped time. In your arms, the world faded away, and for a moment, everything was perfect.",
+                    quote: "Home is in your arms."
+                },
+
+                {
+                    year: "2025", img: images.love, title: "The Soul Connection",
+                    desc: "A year of growth and deeper understanding. We realized that our paths aren't just crossing, they are merging into one.",
+                    quote: "Two souls, one destiny."
+                },
+
+                {
+                    year: "2026", img: images.kiss, title: "The Forehead Kiss",
+                    desc: "A gentle kiss on the forehead, a silent vow of protection and eternal love. Here we are, stronger than ever.",
+                    quote: "Sealed with a promise."
+                },
+            ];
+
+            return (
+                <div className="antialiased selection:bg-rose-500 selection:text-white">
+                    <AnimatePresence>
+                        {!hasEntered && <EnterScreen onEnter={handleEnter} key="enter" />}
+                    </AnimatePresence>
+
+                    <div className={hasEntered ? "opacity-100 transition-opacity duration-1000" : "opacity-0 pointer-events-none h-0 overflow-hidden"}>
+                        <MusicPlayer isPlaying={isPlaying} togglePlay={togglePlay} audioRef={audioRef} />
+                        <RosePetals />
+
+                        <Hero />
+
+                        <div className="relative">
+                            {/* Vertical Connected Lines */}
+                            {events.map((event, i) => (
+                                <StorySection key={i} data={event} index={i} />
+                            ))}
+                        </div>
+
+                        <Proposal />
+
+                        <footer className="text-center py-12 bg-black border-t border-white/10 text-gray-500 font-serif">
+                            <p>Arun & Binisha • Forever</p>
+                        </footer>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
